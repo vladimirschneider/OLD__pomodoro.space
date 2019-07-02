@@ -13,7 +13,7 @@ export default class Pomodoro {
         modeName: 'long-break',
         duration: 6
       },
-      timerOrder: ['pomodoro', 'short-break', 'pomodoro'],
+      timerOrder: ['pomodoro', 'short-break', 'pomodoro', 'long-break'],
       events: {
         timer: () => {},
         isFinished: () => {},

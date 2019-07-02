@@ -28,10 +28,15 @@ pomodoro.on('start', () => {
   btnDestroy.disabled = false;
 
   label.innerHTML = getLabelText();
+  progress.max = pomodoro.state.secondsGoal;
 });
 
 btnPlay.addEventListener('click', () => {
   pomodoro.rePause();
+});
+
+btnDestroy.addEventListener('click', () => {
+  pomodoro.destroy();
 });
 
 pomodoro.on('pause', () => {
@@ -45,15 +50,12 @@ pomodoro.on('time', (info) => {
 
 pomodoro.on('modeChanged', () => {
   label.innerHTML = getLabelText();
+  progress.max = pomodoro.state.secondsGoal;
 });
 
 pomodoro.on('rePause', () => {
   btnPause.disabled = false;
   btnPlay.disabled = true;
-});
-
-btnDestroy.addEventListener('click', () => {
-  pomodoro.destroy();
 });
 
 pomodoro.on('isFinished', () => {
@@ -62,6 +64,7 @@ pomodoro.on('isFinished', () => {
   btnPlay.disabled = true;
   btnDestroy.disabled = true;
   progress.value = 0;
+  label.innerHTML = '';
 });
 
 function getLabelText() {
