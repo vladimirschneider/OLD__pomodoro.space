@@ -67,7 +67,7 @@ export default class Pomodoro {
   }
 
   nextMode() {
-    this.info.secondsPassed = 1;
+    this.info.secondsPassed = 0;
     this.info.timerFinished.push(this.options.timerOrder[this.info.timerFinished.length]);
     this.info.activeMode = this.options.timerOrder[this.info.timerFinished.length];
     this.info.secondsGoal = this.getModeOptionByName().duration;

@@ -75,7 +75,9 @@ pomodoro.on('pause', () => {
 
 pomodoro.on('time', (info) => {
   progress.value = info.secondsPassed;
-  d = d.add(1, 'second');
+  if (info.secondsPassed !== 0) {
+    d = d.add(1, 'second');
+  }
 
   label.innerHTML = `
     ${getTimeFormated()}
