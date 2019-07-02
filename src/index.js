@@ -61,6 +61,7 @@ pomodoro.on('isFinished', () => {
   btnPause.disabled = true;
   btnPlay.disabled = true;
   btnDestroy.disabled = true;
+  progress.value = 0;
 });
 
 function getLabelText() {
