@@ -22,6 +22,31 @@ btnPause.addEventListener('click', () => {
   pomodoro.pause();
 });
 
+btnPlay.addEventListener('click', () => {
+  pomodoro.rePause();
+});
+
+btnDestroy.addEventListener('click', () => {
+  pomodoro.destroy();
+});
+
+const changeDurationBtn = document.querySelector('[data-changeDurationBtn]');
+const namePomodoro = document.querySelector('[name="pomodoro"]');
+const nameShortBreak = document.querySelector('[name="short-break"]');
+const nameLongBreak = document.querySelector('[name="long-break"]');
+
+namePomodoro.value = pomodoro.options.pomodoro.duration;
+nameShortBreak.value = pomodoro.options.shortBreak.duration;
+nameLongBreak.value = pomodoro.options.longBreak.duration;
+
+changeDurationBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  pomodoro.changeDuration('pomodoro', namePomodoro.value);
+  pomodoro.changeDuration('short-break', nameShortBreak.value);
+  pomodoro.changeDuration('long-break', nameLongBreak.value);
+});
+
 pomodoro.on('start', () => {
   btnRun.disabled = true;
   btnPause.disabled = false;
@@ -29,14 +54,6 @@ pomodoro.on('start', () => {
 
   label.innerHTML = getLabelText();
   progress.max = pomodoro.state.secondsGoal;
-});
-
-btnPlay.addEventListener('click', () => {
-  pomodoro.rePause();
-});
-
-btnDestroy.addEventListener('click', () => {
-  pomodoro.destroy();
 });
 
 pomodoro.on('pause', () => {
@@ -50,7 +67,7 @@ pomodoro.on('time', (info) => {
 
 pomodoro.on('modeChanged', () => {
   label.innerHTML = getLabelText();
-  progress.max = pomodoro.state.secondsGoal;
+  progress.max = pomodoro.get.secondsGoal;
 });
 
 pomodoro.on('rePause', () => {
@@ -67,8 +84,12 @@ pomodoro.on('isFinished', () => {
   label.innerHTML = '';
 });
 
+pomodoro.on('changedDuration', () => {
+  progress.max = pomodoro.state.secondsGoal;
+});
+
 function getLabelText() {
-  const modeOptionNameByName = pomodoro.modeOptionNameByName;
+  const modeOptionNameByName = pomodoro.getModeOptionNameByName();
   let labelText = '';
 
   switch (modeOptionNameByName) {

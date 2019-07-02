@@ -8,25 +8,29 @@
   </head>
   <body>
     <main>
-      <section>
+      <section class="pomodoro">
         <div class="container">
-          <h1>Pomodoro timer</h1>
-          <button type="button" data-run>Run</button>
-          <button disabled="disabled" data-pause>Pause</button>
-          <button disabled="disabled" data-play>Play</button>
-          <button disabled="disabled" data-destroy>Destroy</button>
-          <section>
+          <header class="pomodoro__header">
+            <h1 class="pomodoro__title">Pomodoro timer</h1>
+            <div class="pomodoro__controls">
+              <button type="button" data-run>Run</button>
+              <button disabled="disabled" data-pause>Pause</button>
+              <button disabled="disabled" data-play>Play</button>
+              <button disabled="disabled" data-destroy>Destroy</button>
+            </div>
+          </header>
+          <section class="pomodoro__progress">
             <h2>What do</h2>
             <p data-label></p>
             <progress max="5" value="0" data-progress></progress>
           </section>
           <section>
             <h2>Duration setings</h2>
-            <form action="/change-mode" method="GET" data-changeDuration>
+            <form action="/change-mode" method="GET">
               <p><label>Pomodoro: <input type="text" name="pomodoro" value="5"></label></p>
               <p><label>Short break: <input type="text" name="short-break" value="1"></label></p>
               <p><label>Long break: <input type="text" name="long-break" value="6"></label></p>
-              <p><button type="submit">Change</button></p>
+              <p><button type="submit" data-changeDurationBtn>Change</button></p>
             </form>
           </section>
         </div>

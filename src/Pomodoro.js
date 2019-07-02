@@ -20,7 +20,8 @@ export default class Pomodoro {
         modeChanged: () => {},
         start: () => {},
         pause: () => {},
-        rePause: () => {}
+        rePause: () => {},
+        changedDuration: () => {}
       }
     }
 
@@ -36,7 +37,7 @@ export default class Pomodoro {
   run() {
     this.info.activeMode = this.options.timerOrder[0];
     this.info.isPause = false;
-    this.info.secondsGoal = this.modeOptionByName.duration;
+    this.info.secondsGoal = this.getModeOptionByName().duration;
 
     this.options.events.start();
 
@@ -69,7 +70,7 @@ export default class Pomodoro {
     this.info.secondsPassed = 0;
     this.info.timerFinished.push(this.options.timerOrder[this.info.timerFinished.length]);
     this.info.activeMode = this.options.timerOrder[this.info.timerFinished.length];
-    this.info.secondsGoal = this.modeOptionByName.duration;
+    this.info.secondsGoal = this.getModeOptionByName().duration;
   }
 
   destroy() {
@@ -107,14 +108,14 @@ export default class Pomodoro {
     return false;
   }
 
-  get modeOptionByName() {
-    const modeOptinoName = this.modeOptionNameByName;
+  getModeOptionByName(modeName = this.info.activeMode) {
+    const modeOptinoName = this.getModeOptionNameByName(modeName);
 
     return this.options[modeOptinoName];
   }
 
-  get modeOptionNameByName() {
-    switch(this.info.activeMode) {
+  getModeOptionNameByName(modeName = this.info.activeMode) {
+    switch(modeName) {
       case 'pomodoro':
         return 'pomodoro';
       case 'short-break':
@@ -126,6 +127,16 @@ export default class Pomodoro {
 
   get state() {
     return this.info;
+  }
+
+  changeDuration(modeName, duration) {
+    this.getModeOptionByName(modeName).duration = duration;
+
+    if (modeName === this.info.activeMode) {
+      this.info.secondsGoal = duration;
+    }
+
+    this.options.events.changedDuration(modeName);
   }
 
   on(event, callback) {
@@ -147,6 +158,9 @@ export default class Pomodoro {
         break;
       case 'rePause':
         this.options.events.rePause = callback;
+        break;
+      case 'changedDuration':
+        this.options.events.changedDuration = callback;
         break;
     }
   }
