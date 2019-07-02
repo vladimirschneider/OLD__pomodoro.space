@@ -3,7 +3,12 @@
 import 'normalize.css';
 import '../public/css/style.css';
 
+import dayjs from 'dayjs';
 import Pomodoro from './Pomodoro';
+
+import tomatoIcon from '../public/images/tomato.svg'
+import clockIcon from '../public/images/clock.svg'
+import siestaIcon from '../public/images/siesta.svg'
 
 const pomodoro = new Pomodoro();
 
@@ -13,6 +18,7 @@ const btnPlay = document.querySelector('[data-play]');
 const btnDestroy = document.querySelector('[data-destroy]');
 const label = document.querySelector('[data-label]');
 const progress = document.querySelector('[data-progress]');
+const pomodoroIcon = document.querySelector('[data-icon]');
 
 btnRun.addEventListener('click', () => {
   pomodoro.run();
@@ -29,6 +35,8 @@ btnPlay.addEventListener('click', () => {
 btnDestroy.addEventListener('click', () => {
   pomodoro.destroy();
 });
+
+let d = dayjs('2000-07-08 00:00:00');
 
 const changeDurationBtn = document.querySelector('[data-changeDurationBtn]');
 const namePomodoro = document.querySelector('[name="pomodoro"]');
@@ -51,9 +59,13 @@ pomodoro.on('start', () => {
   btnRun.disabled = true;
   btnPause.disabled = false;
   btnDestroy.disabled = false;
-
-  label.innerHTML = getLabelText();
   progress.max = pomodoro.state.secondsGoal;
+
+  setIcon();
+
+  label.innerHTML = `
+    ${getTimeFormated()}
+  `;
 });
 
 pomodoro.on('pause', () => {
@@ -63,11 +75,24 @@ pomodoro.on('pause', () => {
 
 pomodoro.on('time', (info) => {
   progress.value = info.secondsPassed;
+  d = d.add(1, 'second');
+
+  label.innerHTML = `
+    ${getTimeFormated()}
+  `;
 });
 
 pomodoro.on('modeChanged', () => {
-  label.innerHTML = getLabelText();
-  progress.max = pomodoro.get.secondsGoal;
+  label.innerHTML = '';
+
+  progress.max = pomodoro.state.secondsGoal;
+  d = dayjs('2000-07-08 00:00:00');
+
+  setIcon();
+
+  label.innerHTML = `
+    ${getTimeFormated()}
+  `;
 });
 
 pomodoro.on('rePause', () => {
@@ -82,27 +107,34 @@ pomodoro.on('isFinished', () => {
   btnDestroy.disabled = true;
   progress.value = 0;
   label.innerHTML = '';
+  pomodoroIcon.removeAttribute('src');
+  d = dayjs('2000-07-08 00:00:00');
 });
 
 pomodoro.on('changedDuration', () => {
   progress.max = pomodoro.state.secondsGoal;
 });
 
-function getLabelText() {
-  const modeOptionNameByName = pomodoro.getModeOptionNameByName();
-  let labelText = '';
+function setIcon() {
+  let iconSrc = '';
 
-  switch (modeOptionNameByName) {
+  switch (pomodoro.state.activeMode) {
     case 'pomodoro':
-      labelText = 'Pomodoro time!'
+      iconSrc = tomatoIcon;
       break;
-    case 'shortBreak':
-      labelText = 'do BREAK!!';
+    case 'short-break':
+      iconSrc = clockIcon;
       break;
-    case 'longBreak':
-      labelText = 'Uh..looong break';
+    case 'long-break':
+      iconSrc = siestaIcon;
       break;
   }
 
-  return labelText;
+  pomodoroIcon.src = iconSrc;
+}
+
+function getTimeFormated() {
+  const formatedTime = d.format('mm:ss');
+
+  return formatedTime;
 }

@@ -38,12 +38,42 @@ html {
 }
 
 .pomodoro__header {
-  padding-top: 40px;
-  padding-bottom: 20px;
+  padding-top: 60px;
+  padding-bottom: 40px;
 }
 
 .pomodoro__progress {
   margin-bottom: 40px;
+}
+
+.pomodoro__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin: 5px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.pomodoro__timer {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.pomodoro__icon {
+  margin-right: 20px;
+}
+
+.pomodoro__icon {
+  display: none;
+}
+
+.pomodoro__icon[src] {
+  display: block;
 }
 
 button {
@@ -85,4 +115,43 @@ button:focus {
 
 progress {
   width: 100%;
+}
+
+.duration-form {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 60px 60px 60px;
+  width: 100%;
+  justify-content: center;
+}
+
+.duration-form__footer {
+  display: flex;
+  justify-content: center;
+  grid-column: 1/4;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.field__label {
+  margin-bottom: 10px;
+}
+
+.field__input {
+  width: 60px;
+  height: 34px;
+
+  font: inherit;
+  text-align: center;
+
+  border: 2px solid rgb(226, 226, 226);
+  border-radius: 5px;
+
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
 }

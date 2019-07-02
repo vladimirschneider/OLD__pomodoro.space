@@ -63,11 +63,11 @@ export default class Pomodoro {
       this.options.events.timer(this.state);
     }
 
-    setTimeout(this.doPomodoro.bind(this), 1000);
+    this.timer = setTimeout(this.doPomodoro.bind(this), 1000);
   }
 
   nextMode() {
-    this.info.secondsPassed = 0;
+    this.info.secondsPassed = 1;
     this.info.timerFinished.push(this.options.timerOrder[this.info.timerFinished.length]);
     this.info.activeMode = this.options.timerOrder[this.info.timerFinished.length];
     this.info.secondsGoal = this.getModeOptionByName().duration;
@@ -78,6 +78,8 @@ export default class Pomodoro {
     this.info.isPause = true;
     this.info.activeMode = this.options.timerOrder[0];
     this.info.timerFinished.length = 0;
+
+    clearTimeout(this.timer);
 
     this.options.events.isFinished();
   }

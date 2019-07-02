@@ -20,19 +20,37 @@
             </div>
           </header>
           <section class="pomodoro__progress">
-            <h2>What do</h2>
-            <p data-label></p>
             <progress max="5" value="0" data-progress></progress>
+            <div class="pomodoro__label">
+              <img class="pomodoro__icon" width="26" height="26" data-icon>
+              <p class="pomodoro__timer" data-label></p>
+            </div>
           </section>
           <section>
-            <h2>Duration setings</h2>
-            <form action="/change-mode" method="GET">
-              <p><label>Pomodoro: <input type="text" name="pomodoro" value="5"></label></p>
-              <p><label>Short break: <input type="text" name="short-break" value="1"></label></p>
-              <p><label>Long break: <input type="text" name="long-break" value="6"></label></p>
-              <p><button type="submit" data-changeDurationBtn>Change</button></p>
+            <form class="pomodoro__duration duration-form" action="/change-mode" method="GET">
+              <p class="field">
+                <label class="field__label" for="tomato">
+                  <img src="./images/tomato.svg" width="24" height="24">
+                </label>
+                <input class="field__input" type="text" name="pomodoro" id="tomato" value="5">
+              </p>
+              <p class="field">
+                <label class="field__label" for="clock">
+                  <img src="./images/clock.svg" width="24" height="24">
+                </label>
+                <input class="field__input" type="text" name="short-break" id="clock" value="1">
+              </p>
+              <p class="field">
+                <label class="field__label" for="siesta">
+                  <img src="./images/siesta.svg" width="24" height="24">
+                </label>
+                <input class="field__input" type="text" name="long-break" id="siesta" value="6">
+              </p>
+              <p class="duration-form__footer">
+                <button type="submit" data-changeDurationBtn>Change</button>
+              </p>
             </form>
-          </section>
+          </p>
         </div>
       </section>
     </main>
