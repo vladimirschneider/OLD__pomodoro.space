@@ -43,7 +43,7 @@ pomodoro.on('time', (info) => {
   progress.value = info.secondsPassed;
 });
 
-pomodoro.on('modeChanged', (modeName) => {
+pomodoro.on('modeChanged', () => {
   label.innerHTML = getLabelText();
 });
 

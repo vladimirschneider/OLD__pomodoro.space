@@ -49,7 +49,7 @@ export default class Pomodoro {
         if (!this.isTimerFinished) {
           this.nextMode();
 
-          this.options.events.modeChanged(this.info.activeMode);
+          this.options.events.modeChanged();
         } else {
           this.destroy();
           this.options.events.isFinished();
