@@ -14,7 +14,6 @@ export default class Pomodoro {
         duration: 6
       },
       timerOrder: ['pomodoro', 'short-break', 'pomodoro'],
-      timerFinished: [],
       events: {
         timer: () => {},
         isFinished: () => {},
@@ -29,7 +28,8 @@ export default class Pomodoro {
       activeMode: '',
       secondsPassed: 0,
       secondsGoal: 0,
-      isPause: true
+      isPause: true,
+      timerFinished: []
     };
   }
 
@@ -67,8 +67,8 @@ export default class Pomodoro {
 
   nextMode() {
     this.info.secondsPassed = 0;
-    this.options.timerFinished.push(this.options.timerOrder[this.options.timerFinished.length]);
-    this.info.activeMode = this.options.timerOrder[this.options.timerFinished.length];
+    this.info.timerFinished.push(this.options.timerOrder[this.info.timerFinished.length]);
+    this.info.activeMode = this.options.timerOrder[this.info.timerFinished.length];
     this.info.secondsGoal = this.modeOptionByName.duration;
   }
 
@@ -76,7 +76,7 @@ export default class Pomodoro {
     this.info.secondsPassed = 0;
     this.info.isPause = true;
     this.info.activeMode = this.options.timerOrder[0];
-    this.options.timerFinished.length = 0;
+    this.info.timerFinished.length = 0;
 
     this.options.events.isFinished();
   }
@@ -100,7 +100,7 @@ export default class Pomodoro {
   }
 
   get isTimerFinished() {
-    if (this.options.timerFinished.length + 1 >= this.options.timerOrder.length) {
+    if (this.info.timerFinished.length + 1 >= this.options.timerOrder.length) {
       return true;
     }
 
