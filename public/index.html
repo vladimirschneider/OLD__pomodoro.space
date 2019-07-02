@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document title</title>
+  </head>
+  <body>
+    <h1>Pomodoro timer</h1>
+    <button type="button" data-run>Run</button>
+    <button disabled="disabled" data-pause>Pause</button>
+    <button disabled="disabled" data-play>Play</button>
+    <button disabled="disabled" data-destroy>Destroy</button>
+    <section>
+      <h2>What do</h2>
+      <p data-label></p>
+      <progress max="5" value="0" data-progress></progress>
+    </section>
+    <section>
+      <h2>Duration setings</h2>
+      <form action="/change-mode" method="GET" data-changeDuration>
+        <input type="text" name="pomodoro" value="5">
+        <input type="text" name="short-break" value="1">
+        <input type="text" name="long-break" value="6">
+        <button type="submit">Change</button>
+      </form>
+    </section>
+  </body>
+</html>
