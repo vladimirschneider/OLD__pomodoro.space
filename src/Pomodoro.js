@@ -28,6 +28,7 @@ export default class Pomodoro {
     this.info = {
       activeMode: '',
       secondsPassed: 0,
+      secondsGoal: 0,
       isPause: true
     };
   }
@@ -35,6 +36,7 @@ export default class Pomodoro {
   run() {
     this.info.activeMode = this.options.timerOrder[0];
     this.info.isPause = false;
+    this.info.secondsGoal = this.modeOptionByName.duration;
 
     this.options.events.start();
 
@@ -67,6 +69,7 @@ export default class Pomodoro {
     this.info.secondsPassed = 0;
     this.options.timerFinished.push(this.options.timerOrder[this.options.timerFinished.length]);
     this.info.activeMode = this.options.timerOrder[this.options.timerFinished.length];
+    this.info.secondsGoal = this.modeOptionByName.duration;
   }
 
   destroy() {
@@ -89,7 +92,7 @@ export default class Pomodoro {
   }
 
   get isSecondEnded() {
-    if (this.info.secondsPassed >= this.modeOptionByName.duration) {
+    if (this.info.secondsPassed >= this.info.secondsGoal) {
       return true;
     }
 
