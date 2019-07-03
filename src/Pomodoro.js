@@ -22,7 +22,8 @@ export default class Pomodoro {
         pause: () => {},
         rePause: () => {},
         changedDuration: () => {}
-      }
+      },
+      autoplay: false
     }
 
     this.info = {
@@ -71,6 +72,12 @@ export default class Pomodoro {
     this.info.timerFinished.push(this.options.timerOrder[this.info.timerFinished.length]);
     this.info.activeMode = this.options.timerOrder[this.info.timerFinished.length];
     this.info.secondsGoal = this.getModeOptionByName().duration;
+
+    if (!this.options.autoplay) {
+      this.info.isPause = true;
+
+      this.options.events.pause();
+    }
   }
 
   destroy() {
