@@ -12,6 +12,11 @@
         <div class="container">
           <header class="pomodoro__header">
             <h1 class="pomodoro__title">Pomodoro timer</h1>
+            <label class="pomodoro__autoplay field field_autoplay">
+              <input class="field__input" type="checkbox" name="autoplay" id="autoplay" data-autoplay>
+              <span class="field__autoplay"></span>
+              <span class="field__label" for="autoplay">Autoplay</span>
+            </label>
             <div class="pomodoro__controls">
               <button type="button" data-run>Run</button>
               <button type="button" disabled="disabled" data-pause>Pause</button>

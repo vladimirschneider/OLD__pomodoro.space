@@ -148,6 +148,10 @@ export default class Pomodoro {
     this.options.events.changedDuration(modeName);
   }
 
+  changeAutoplay(autoplay) {
+    this.options.autoplay = autoplay;
+  }
+
   on(event, callback) {
     switch(event) {
       case 'time':

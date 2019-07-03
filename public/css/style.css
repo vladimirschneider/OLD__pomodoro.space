@@ -27,6 +27,11 @@ body {
   text-align: center;
 }
 
+.pomodoro__autoplay {
+  display: flex;
+  justify-content: center;
+}
+
 .pomodoro__controls {
   display: flex;
   justify-content: space-between;
@@ -167,8 +172,59 @@ progress[value]::-webkit-progress-value {
   margin-bottom: 0;
 }
 
+.field_autoplay {
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
 .field__label {
   margin-bottom: 10px;
+}
+
+.field_autoplay .field__label {
+  position: relative;
+  margin-bottom: 0;
+
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.field__autoplay {
+  position: relative;
+
+  width: 60px;
+  height: 30px;
+  margin-right: 20px;
+
+  background-color: #ffbe52;
+  border-radius: 26px;
+}
+
+.field__autoplay::before {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+
+  content: "";
+
+  display: block;
+  width: 20px;
+  height: 20px;
+
+  background-color: rgb(250, 250, 250);
+  border-radius: 50%;
+
+  transition: transform        100ms ease-in-out,
+              background-color 100ms ease-in-out;
+}
+
+.field_autoplay .field__input:checked ~ .field__autoplay::before {
+  transform: translateX(30px);
+}
+
+.field_autoplay .field__input:checked ~ .field__autoplay {
+  background-color: #84bd93;
 }
 
 .field__input {
@@ -185,4 +241,8 @@ progress[value]::-webkit-progress-value {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+}
+
+.field_autoplay .field__input {
+  display: none;
 }

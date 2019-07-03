@@ -19,6 +19,7 @@ const btnDestroy = document.querySelector('[data-destroy]');
 const label = document.querySelector('[data-label]');
 const progress = document.querySelector('[data-progress]');
 const pomodoroIcon = document.querySelector('[data-icon]');
+const autoplay = document.querySelector('[data-autoplay]');
 
 btnRun.addEventListener('click', () => {
   pomodoro.run();
@@ -34,6 +35,10 @@ btnPlay.addEventListener('click', () => {
 
 btnDestroy.addEventListener('click', () => {
   pomodoro.destroy();
+});
+
+autoplay.addEventListener('input', () => {
+  pomodoro.changeAutoplay(autoplay.checked);
 });
 
 let d = dayjs('2000-07-08 00:00:00');
