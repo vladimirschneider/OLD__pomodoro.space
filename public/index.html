@@ -14,16 +14,18 @@
             <h1 class="pomodoro__title">Pomodoro timer</h1>
             <div class="pomodoro__controls">
               <button type="button" data-run>Run</button>
-              <button disabled="disabled" data-pause>Pause</button>
-              <button disabled="disabled" data-play>Play</button>
-              <button disabled="disabled" data-destroy>Destroy</button>
+              <button type="button" disabled="disabled" data-pause>Pause</button>
+              <button type="button" disabled="disabled" data-play>Play</button>
+              <button type="button" disabled="disabled" data-destroy>Destroy</button>
             </div>
           </header>
           <section class="pomodoro__progress">
             <progress max="5" value="0" data-progress></progress>
             <div class="pomodoro__label">
-              <img class="pomodoro__icon" width="26" height="26" data-icon>
-              <p class="pomodoro__timer" data-label></p>
+              <div class="pomodoro__icon__wrap">
+                <img class="pomodoro__icon" src="./images/tomato.svg" width="35" height="35" data-icon>
+              </div>
+              <p class="pomodoro__timer" data-label>00:00</p>
             </div>
           </section>
           <section>

@@ -108,9 +108,9 @@ pomodoro.on('isFinished', () => {
   btnPlay.disabled = true;
   btnDestroy.disabled = true;
   progress.value = 0;
-  label.innerHTML = '';
-  pomodoroIcon.removeAttribute('src');
+  pomodoroIcon.src = tomatoIcon;
   d = dayjs('2000-07-08 00:00:00');
+  label.innerHTML = getTimeFormated();
 });
 
 pomodoro.on('changedDuration', () => {
