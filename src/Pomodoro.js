@@ -3,17 +3,17 @@ export default class Pomodoro {
     this.options = {
       pomodoro: {
         modeName: 'pomodoro',
-        duration: 5
+        duration: 1500
       },
       shortBreak: {
         modeName: 'short-break',
-        duration: 1
+        duration: 300
       },
       longBreak: {
         modeName: 'long-break',
-        duration: 6
+        duration: 1800
       },
-      timerOrder: ['pomodoro', 'short-break', 'pomodoro', 'long-break'],
+      timerOrder: ['pomodoro', 'short-break', 'pomodoro', 'short-break', 'pomodoro', 'short-break', 'pomodoro', 'long-break', 'pomodoro', 'short-break', 'pomodoro', 'short-break', 'pomodoro', 'short-break', 'pomodoro'],
       events: {
         timer: () => {},
         isFinished: () => {},
@@ -22,8 +22,7 @@ export default class Pomodoro {
         pause: () => {},
         rePause: () => {},
         changedDuration: () => {}
-      },
-      autoplay: false
+      }
     }
 
     this.info = {
@@ -31,8 +30,11 @@ export default class Pomodoro {
       secondsPassed: 0,
       secondsGoal: 0,
       isPause: true,
-      timerFinished: []
+      timerFinished: [],
+      autoplay: false
     };
+
+    this.initLocalOptions();
   }
 
   run() {
@@ -43,6 +45,60 @@ export default class Pomodoro {
     this.options.events.start();
 
     setTimeout(this.doPomodoro.bind(this), 1000);
+  }
+
+  initLocalOptions() {
+    const activeMode = localStorage.getItem('activeMode');
+    const secondsPassed = localStorage.getItem('secondsPassed');
+    const secondsGoal = localStorage.getItem('secondsGoal');
+    const isPause = localStorage.getItem('isPause');
+    const timerFinished = localStorage.getItem('timerFinished');
+    const autoplay = localStorage.getItem('autoplay');
+
+    if (activeMode) {
+      this.info.activeMode = activeMode;
+    } else {
+      localStorage.setItem('activeMode', this.info.activeMode);
+    }
+
+    if (secondsPassed) {
+      this.info.secondsPassed = Number(secondsPassed);
+    } else {
+      localStorage.setItem('secondsPassed', this.info.secondsPassed);
+    }
+
+    if (secondsGoal) {
+      this.info.secondsGoal = Number(secondsGoal);
+    } else {
+      localStorage.setItem('secondsGoal', this.info.secondsGoal);
+    }
+
+    if (isPause) {
+      this.info.isPause = isPause === 'true' ? true : false;
+    } else {
+      localStorage.setItem('isPause', this.info.isPause);
+    }
+
+    if (timerFinished) {
+      this.info.timerFinished = JSON.parse(timerFinished);
+    } else {
+      localStorage.setItem('timerFinished', JSON.stringify(this.info.timerFinished));
+    }
+
+    if (autoplay) {
+      this.info.autoplay = autoplay === 'true' ? true : false;
+    } else {
+      localStorage.setItem('autoplay', this.info.autoplay);
+    }
+  }
+
+  updateLocalOptions() {
+    localStorage.setItem('activeMode', this.info.activeMode);
+    localStorage.setItem('secondsPassed', this.info.secondsPassed);
+    localStorage.setItem('secondsGoal', this.info.secondsGoal);
+    localStorage.setItem('isPause', this.info.isPause);
+    localStorage.setItem('timerFinished', JSON.stringify(this.info.timerFinished));
+    localStorage.setItem('autoplay', this.info.autoplay);
   }
 
   doPomodoro() {
@@ -59,6 +115,7 @@ export default class Pomodoro {
         }
       } else {
         this.info.secondsPassed++;
+        this.updateLocalOptions();
       }
 
       this.options.events.timer(this.state);
@@ -73,11 +130,13 @@ export default class Pomodoro {
     this.info.activeMode = this.options.timerOrder[this.info.timerFinished.length];
     this.info.secondsGoal = this.getModeOptionByName().duration;
 
-    if (!this.options.autoplay) {
+    if (!this.info.autoplay) {
       this.info.isPause = true;
 
       this.options.events.pause();
     }
+
+    this.updateLocalOptions();
   }
 
   destroy() {
@@ -85,6 +144,8 @@ export default class Pomodoro {
     this.info.isPause = true;
     this.info.activeMode = this.options.timerOrder[0];
     this.info.timerFinished.length = 0;
+
+    this.updateLocalOptions();
 
     clearTimeout(this.timer);
 
@@ -94,11 +155,13 @@ export default class Pomodoro {
   pause() {
     this.info.isPause = true;
     this.options.events.pause();
+    this.updateLocalOptions();
   }
 
   rePause() {
     this.info.isPause = false;
     this.options.events.rePause();
+    this.updateLocalOptions();
   }
 
   get isSecondEnded() {
@@ -139,17 +202,20 @@ export default class Pomodoro {
   }
 
   changeDuration(modeName, duration) {
-    this.getModeOptionByName(modeName).duration = duration;
+    this.getModeOptionByName(modeName).duration = duration * 60;
 
     if (modeName === this.info.activeMode) {
-      this.info.secondsGoal = duration;
+      this.info.secondsGoal = this.getModeOptionByName(modeName).duration;
     }
+
+    this.updateLocalOptions();
 
     this.options.events.changedDuration(modeName);
   }
 
   changeAutoplay(autoplay) {
-    this.options.autoplay = autoplay;
+    this.info.autoplay = autoplay;
+    this.updateLocalOptions();
   }
 
   on(event, callback) {
