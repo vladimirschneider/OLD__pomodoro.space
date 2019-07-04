@@ -79,14 +79,6 @@ body {
   margin-bottom: 16px;
 }
 
-.pomodoro__icon {
-  display: none;
-}
- 
-.pomodoro__icon[src] {
-  display: block;
-}
-
 button {
   padding: 10px 24px;
 
@@ -245,4 +237,38 @@ progress[value]::-webkit-progress-value {
 
 .field_autoplay .field__input {
   display: none;
+}
+
+.wiki-link {
+  display: inline-block;
+  padding: 4px 10px;
+
+  font-size: 14px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: black;
+
+  background-color: rgb(231, 231, 231);
+  border-radius: 4px;
+}
+
+.page-footer {
+  padding-top: 60px;
+  padding-bottom: 40px;
+
+  line-height: 1.5;
+}
+
+.page-footer__title {
+  margin-top: 0;
+  margin-bottom: 30px;
+
+  font-size: 32px;
+  font-weight: 300;
+}
+
+.page-footer p {
+  margin-top: 0;
+  margin-bottom: 16px;
 }
