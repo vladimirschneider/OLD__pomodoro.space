@@ -1,5 +1,7 @@
 /node_modules
 /dist
+/.idea
 
 # System files
 .DS_store
+package-lock.json
