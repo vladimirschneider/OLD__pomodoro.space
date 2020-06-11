@@ -4,33 +4,54 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
-import locale from './locales/en.json';
+import ru from './locales/ru.json';
+import en from './locales/en.json';
 
 class I18nPlugin {
   constructor(options = {}) {
-    this.i18n = options;
+    this.locales = options.locales;
   }
 
   apply(compiler) {
-    compiler.hooks.compilation.tap('MyPlugin', (compilation) => {
+    compiler.hooks.compilation.tap('I18nPlugin', (compilation) => {
       const {
         beforeEmit,
       } = HtmlWebpackPlugin.getHooks(compilation);
 
-      beforeEmit.tapAsync(
-        'I18nPlugin',
-        (data, cb) => {
-          const keys = data.html.match(/({\st\s\')(.+?)(\'\s})/g);
+      for (const locale in this.locales) {
+        beforeEmit.tapAsync(
+          'I18nPlugin',
+          (data, cb) => {
+            let dataOfHook = {...data};
+            const keys = dataOfHook.html.match(/({\st\s\')(.+?)(\'\s})/g) || [];
 
-          for (let i = 0; i < keys.length; i++) {
-            const key = keys[i].replace(/({\st\s\')(.+?)(\'\s})/, '$2');
-            data.html = data.html.replace(keys[i], this.i18n[key] || key);
+            for (let i = 0; i < keys.length; i++) {
+              const key = this.getKeyFromString(keys[i]);
+              dataOfHook.html = dataOfHook.html.replace(keys[i], this.locales[locale][key] || key);
+            }
+
+            if (locale === 'ru') {
+              compilation.assets[`ru/${dataOfHook.plugin.options.filename}`] = {
+                source: function() {
+                  return dataOfHook.html
+                },
+                size: function() {
+                  return dataOfHook.html.length;
+                }
+              }
+            } else {
+              data = dataOfHook;
+            }
+
+            cb(null, data)
           }
-
-          cb(null, data)
-        }
-      );
+        );
+      }
     });
+  }
+
+  getKeyFromString(str) {
+    return str.replace(/({\st\s\')(.+?)(\'\s})/, '$2');
   }
 }
 
@@ -135,7 +156,12 @@ const configuration = {
       template: './public/index.html',
       filename: 'index.html',
     }),
-    new I18nPlugin(locale)
+    new I18nPlugin({
+      locales: {
+        ru,
+        en
+      },
+    })
   ]
 };
 
