@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>The Pomodoro timer online – 25/5/30</title>
+    <title>{ t 'The Pomodoro timer online' }</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -20,17 +20,17 @@
       <section class="pomodoro">
         <div class="container">
           <header class="pomodoro__header">
-            <h1 class="pomodoro__title">Pomodoro timer</h1>
+            <h1 class="pomodoro__title">{ t 'Pomodoro timer' }</h1>
             <label class="pomodoro__autoplay field field_autoplay">
               <input class="field__input" type="checkbox" name="autoplay" id="autoplay" data-autoplay>
               <span class="field__autoplay"></span>
-              <span class="field__label" for="autoplay">Autoplay</span>
+              <span class="field__label" for="autoplay">{ t 'Autoplay' }</span>
             </label>
             <div class="pomodoro__controls">
-              <button type="button" data-run>Run</button>
-              <button type="button" disabled="disabled" data-pause>Pause</button>
-              <button type="button" disabled="disabled" data-play>Play</button>
-              <button type="button" disabled="disabled" data-destroy>Destroy</button>
+              <button type="button" data-run>{ t 'Run' }</button>
+              <button type="button" disabled="disabled" data-pause>{ t 'Pause' }</button>
+              <button type="button" disabled="disabled" data-play>{ t 'Play' }</button>
+              <button type="button" disabled="disabled" data-destroy>{ t 'Destroy' }</button>
             </div>
           </header>
           <section class="pomodoro__progress">
@@ -63,7 +63,7 @@
                 <input class="field__input" type="text" name="long-break" id="siesta" value="6">
               </p>
               <p class="duration-form__footer">
-                <button type="submit" data-changeDurationBtn>Change</button>
+                <button type="submit" data-changeDurationBtn>{ t 'Change' }</button>
               </p>
             </form>
           </p>
@@ -71,8 +71,8 @@
       </section>
       <footer class="page-footer">
         <div class="container">
-          <h2 class="page-footer__title">The Pomodoro Technique</h2>
-          <p>The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for 'tomato', after the tomato-shaped kitchen timer that Cirillo used as a university student.</p>
+          <h2 class="page-footer__title">{ t 'The Pomodoro Technique' }</h2>
+          <p>{ t 'The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for 'tomato', after the tomato-shaped kitchen timer that Cirillo used as a university student.' }</p>
           <a class="wiki-link" href="https://en.wikipedia.org/wiki/Pomodoro_Technique" target="_blank">wiki</a>
         </div>
       </footer>

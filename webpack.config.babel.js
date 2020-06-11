@@ -4,6 +4,36 @@ import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 import OptimizeCSSAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
+import locale from './locales/en.json';
+
+class I18nPlugin {
+  constructor(options = {}) {
+    this.i18n = options;
+  }
+
+  apply(compiler) {
+    compiler.hooks.compilation.tap('MyPlugin', (compilation) => {
+      const {
+        beforeEmit,
+      } = HtmlWebpackPlugin.getHooks(compilation);
+
+      beforeEmit.tapAsync(
+        'I18nPlugin',
+        (data, cb) => {
+          const keys = data.html.match(/({\st\s\')(.+?)(\'\s})/g);
+
+          for (let i = 0; i < keys.length; i++) {
+            const key = keys[i].replace(/({\st\s\')(.+?)(\'\s})/, '$2');
+            data.html = data.html.replace(keys[i], this.i18n[key] || key);
+          }
+
+          cb(null, data)
+        }
+      );
+    });
+  }
+}
+
 const configuration = {
   module: {
     rules: [
@@ -105,6 +135,7 @@ const configuration = {
       template: './public/index.html',
       filename: 'index.html',
     }),
+    new I18nPlugin(locale)
   ]
 };
 
